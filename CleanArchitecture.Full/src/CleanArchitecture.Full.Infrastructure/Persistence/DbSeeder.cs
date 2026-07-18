@@ -6,37 +6,37 @@ public static class DbSeeder
 {
     public static void Seed(AppDbContext context)
     {
-        if (context.Customers.Any())
+        if (context.Accounts.Any())
         {
             return;
         }
 
-        context.Customers.AddRange(
-            new Customer
+        context.Accounts.AddRange(
+            new Account
             {
                 Id = Guid.NewGuid(),
-                FirstName = "Ada",
-                LastName = "Lovelace",
-                Email = "ada.lovelace@example.com",
-                Phone = "+595981000001",
+                AccountNumber = "ACC-0001",
+                HolderName = "Ada Lovelace",
+                Balance = 15000.50m,
+                Status = "Active",
                 CreatedAt = DateTime.UtcNow
             },
-            new Customer
+            new Account
             {
                 Id = Guid.NewGuid(),
-                FirstName = "Alan",
-                LastName = "Turing",
-                Email = "alan.turing@example.com",
-                Phone = "+595981000002",
+                AccountNumber = "ACC-0002",
+                HolderName = "Alan Turing",
+                Balance = 8320.00m,
+                Status = "Active",
                 CreatedAt = DateTime.UtcNow
             },
-            new Customer
+            new Account
             {
                 Id = Guid.NewGuid(),
-                FirstName = "Grace",
-                LastName = "Hopper",
-                Email = "grace.hopper@example.com",
-                Phone = "+595981000003",
+                AccountNumber = "ACC-0003",
+                HolderName = "Grace Hopper",
+                Balance = 0.00m,
+                Status = "Inactive",
                 CreatedAt = DateTime.UtcNow
             });
 
