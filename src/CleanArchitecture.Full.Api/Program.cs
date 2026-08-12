@@ -1,4 +1,4 @@
-using CleanArchitecture.Full.Api.Endpoints;
+﻿using CleanArchitecture.Full.Api.Endpoints;
 using CleanArchitecture.Full.Api.Middleware;
 using CleanArchitecture.Full.Application;
 using CleanArchitecture.Full.Infrastructure;
@@ -13,7 +13,11 @@ Log.Logger = new LoggerConfiguration()
 
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
+    var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+    {
+        Args = args,
+        ContentRootPath = AppContext.BaseDirectory
+    });
 
     builder.Host.UseSerilog((context, loggerConfiguration) =>
     {
@@ -66,9 +70,11 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "CleanArchitecture.Full.Api termin� de forma inesperada durante el arranque");
+    Console.Error.WriteLine(ex);
+    Log.Fatal(ex, "CleanArchitecture.Full.Api terminó de forma inesperada durante el arranque");
 }
 finally
 {
     Log.CloseAndFlush();
 }
+

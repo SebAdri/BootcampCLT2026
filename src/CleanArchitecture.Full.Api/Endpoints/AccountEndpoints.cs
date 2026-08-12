@@ -33,7 +33,6 @@ public static class AccountEndpoints
 
         group.MapPost("", async (CreateAccountCommand command, ISender sender, CancellationToken cancellationToken) =>
         {
-            Logger.LogInformatio
             var account = await sender.Send(command, cancellationToken);
             return Results.Created($"api/minimal/accounts/{account.Id}", account);
         })
