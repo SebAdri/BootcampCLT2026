@@ -25,7 +25,6 @@ public static class ValidationExceptionMiddlewareExtensions
 
             var requestBody = await ReadRequestBodyAsync(context.Request, context.RequestAborted);
 
-            //logger.LogInformation("");
             logger.LogInformation(
                 "Iniciando HTTP {Method} {Path}. Route: {@RouteValues}, Query: {@QueryParameters}, Body: {@RequestBody}",
                 context.Request.Method,

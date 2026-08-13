@@ -95,6 +95,13 @@ jobs:
           kubectl rollout status deployment/postgres --namespace accounts --timeout=120s
           kubectl rollout status deployment/seq --namespace accounts --timeout=120s
 
+      - name: Apply database schema and seed
+        shell: powershell
+        run: |
+          Get-Content database/02_create_table_and_seed.sql -Raw |
+            kubectl exec --stdin deployment/postgres --namespace accounts -- `
+              psql -v ON_ERROR_STOP=1 -U postgres -d accountsdb
+
       - name: Deploy API with Helm
         shell: powershell
         run: |
@@ -104,7 +111,8 @@ jobs:
             --set image.repository=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/accounts-api `
             --set image.tag=${{ needs.ci.outputs.image_tag }} `
             --set image.pullPolicy=Always `
-            --set probes.path=/api/minimal/accounts `
+            --set probes.readiness.path=/health/ready `
+            --set probes.liveness.path=/health/live `
             --wait `
             --timeout 3m
 
